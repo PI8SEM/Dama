@@ -2,7 +2,7 @@
 
 - [ ] **1. Criar estrutura básica do projeto**
     - [x] Arquivos `index.html`, `style.css`, `script.js`.
-    - [ ] Configurar layout do tabuleiro 8x8.
+    - [x] Configurar layout do tabuleiro 8x8. 
     - [x] Criar HUD com informações de turno e botão “Reiniciar”.
 
 - [ ] **2. Estilizar tabuleiro e peças**

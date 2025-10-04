@@ -6,3 +6,46 @@ main{
     width: 100vw;
     height: 100vh;
 }
+
+
+/* tabuleiro */
+
+#Tabuleiro{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table{
+    width: 500px;
+    height: 500px;
+}
+
+tr{
+    width: 400px;
+    height: 50px;
+}
+
+td{
+    width: 50px;
+    height: 50px;
+    /* border: 2px solid ; */
+}
+
+/* Seleciona as linhas ÍMPARES e pinta as células PARES de escuro */
+tr:nth-child(odd) td:nth-child(even) {
+    background-color: #3A405A ; /* Cor escura */
+}
+
+/* Seleciona as linhas PARES e pinta as células ÍMPARES de escuro */
+tr:nth-child(even) td:nth-child(odd) {
+    background-color: #3A405A ; /* Cor escura */
+}
+
+/* As células restantes terão a cor de fundo padrão (ou podemos definir como branco/claro) */
+tr:nth-child(odd) td:nth-child(odd) {
+    background-color: #eee; /* Cor clara */
+}
