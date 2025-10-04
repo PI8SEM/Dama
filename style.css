@@ -49,3 +49,7 @@ tr:nth-child(even) td:nth-child(odd) {
 tr:nth-child(odd) td:nth-child(odd) {
     background-color: #eee; /* Cor clara */
 }
+
+tr:nth-child(even) td:nth-child(even) {
+    background-color: #eee; /* Cor clara */
+}

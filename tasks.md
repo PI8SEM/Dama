@@ -6,7 +6,7 @@
     - [x] Criar HUD com informações de turno e botão “Reiniciar”.
 
 - [ ] **2. Estilizar tabuleiro e peças**
-    - [ ] Definir casas claras e escuras.
+    - [x] Definir casas claras e escuras.
     - [ ] Estilizar peças vermelhas e pretas em formato circular.
     - [ ] Criar estilo visual diferenciado para dama (ex.: borda dourada).
     - [ ] Garantir que o tabuleiro seja centralizado e responsivo (desktop e mobile).
