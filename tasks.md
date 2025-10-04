@@ -12,7 +12,7 @@
     - [ ] Garantir que o tabuleiro seja centralizado e responsivo (desktop e mobile).
 
 - [ ] **3. Implementar estado e lógica de movimentação**
-    - [ ] Representar o tabuleiro em uma matriz 8x8 no JavaScript.
+    - [X] Representar o tabuleiro em uma matriz 8x8 no JavaScript.
     - [ ] Permitir seleção apenas da peça do jogador da vez.
     - [ ] Calcular e destacar movimentos válidos (diagonais livres).
     - [ ] Realizar movimentação ao clicar no destino válido.
