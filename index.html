@@ -1,125 +1,27 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
+    <title>Jogo de Damas</title>
     <link rel="stylesheet" href="style.css">
-    <title>Dama</title>
 </head>
 <body>
-    <!-- <header id="cabecalho">
-        <section>
-            <h1 id="titulo-cabecalho">Circuit Sense</h1>
-        </section>
-    </header> -->
-
-    <main id="principal">
-        <section id="HUD">
-        <div class="turno"></div>
-        <span id="Vencedor"></span>
-        <button id="Reset">Reiniciar</button>
-        </section>
-
-        <section id="Tabuleiro">
-
-            <table>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-
-            <div class="casaClara"></div> 
-            <div class="casaEscura"></div> 
-
-      <!-- <div class="peças">
-        <div class="Vermelha">
+    <div class="container-jogo">
+        <h1>Jogo de Damas</h1>
+        <div class="painel-info">
+            <div id="info-turno">Turno: Brancas</div>
+            <div class="placar">
+                <span>Brancas capturadas: <b id="brancas-capturadas">0</b></span>
+                <span>Pretas capturadas: <b id="pretas-capturadas">0</b></span>
+            </div>
         </div>
-        <div class="Preta">
+        <div id="tabuleiro"></div>
+        <div id="fim-de-jogo" class="hidden">
+            <div id="fim-de-jogo-texto"></div>
+            <button id="botao-reiniciar">Jogar Novamente</button>
         </div>
-      </div> -->
-    </main>
-    <footer>
-
-    </footer>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
