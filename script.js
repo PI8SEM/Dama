@@ -17,7 +17,6 @@ let capturasObrigatorias = [];
 let placar = { branca: 0, preta: 0 };
 let jogoFinalizado = false;
 
-// Constantes
 const PEAO = 'peao';
 const DAMA = 'dama';
 
@@ -46,8 +45,12 @@ function criarTabuleiroLogico() {
         const casaEscura = (linha + coluna) % 2 !== 0;
 
         if (casaEscura) {
-            if (linha < 3) tabuleiroLogico[i] = { cor: 'preta', tipo: PEAO };
-            if (linha > 4) tabuleiroLogico[i] = { cor: 'branca', tipo: PEAO };
+            if (linha < 3) {
+                tabuleiroLogico[i] = { cor: 'preta', tipo: PEAO };
+            }
+            if (linha > 4) {
+                tabuleiroLogico[i] = { cor: 'branca', tipo: PEAO };
+            }
         }
     }
 }
@@ -87,10 +90,13 @@ function configurarEventListeners() {
  * Gerencia o evento de clique no tabuleiro.
  */
 function gerenciarClique(evento) {
-    if (jogoFinalizado) return;
-
+    if (jogoFinalizado) {
+        return;
+    }
     const casaClicada = evento.target.closest('.casa');
-    if (!casaClicada) return;
+    if (!casaClicada) {
+        return;
+    }
 
     const indexClicado = parseInt(casaClicada.dataset.index);
     const pecaLogica = tabuleiroLogico[indexClicado];
