@@ -25,9 +25,7 @@ function criarManipuladorPosicoes(objetoPosicoes){
 }
 
 function inserirPecasTabuleiro(){
-
     const casas = config.posicoesTabuleiro;
-
     // Posiciona as 12 peças pretas nas 3 primeiras linhas
     for (let i = 0; i < 24; i++) {
         // Pega a linha (de 0 a 7) e a coluna (de 0 a 7) a partir do índice
@@ -41,7 +39,6 @@ function inserirPecasTabuleiro(){
             }
         }
     }
-
     // Posiciona as 12 peças brancas nas 3 últimas linhas
     for (let i = 40; i < 64; i++) {
         const linha = Math.floor(i / 8);
@@ -53,13 +50,12 @@ function inserirPecasTabuleiro(){
             }
         }
     }
-
 }
 
 function manipuladorTabuleiro(posicao, corPeca){
     posicao.appendChild(corPeca);
 }
 
-criarManipuladorPosicoes(config.tabuleiro)
 
+criarManipuladorPosicoes(config.tabuleiro)
 inserirPecasTabuleiro()
