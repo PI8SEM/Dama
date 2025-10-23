@@ -48,27 +48,19 @@ td{
     justify-content: center;
     align-items: center;
 
-    z-index: 0;
+    z-index: 1000;
 }
 
 /* Seleciona as linhas ÍMPARES e pinta as células PARES de escuro */
-tr:nth-child(odd) td:nth-child(even) {
-    background-color: #3A405A ; /* Cor escura */
-}
-
-/* Seleciona as linhas PARES e pinta as células ÍMPARES de escuro */
-tr:nth-child(even) td:nth-child(odd) {
+.casaPreta {
     background-color: #3A405A ; /* Cor escura */
 }
 
 /* As células restantes terão a cor de fundo padrão (ou podemos definir como branco/claro) */
-tr:nth-child(odd) td:nth-child(odd) {
+.casaBranca {
     background-color: #eee; /* Cor clara */
 }
 
-tr:nth-child(even) td:nth-child(even) {
-    background-color: #eee; /* Cor clara */
-}
 
 /* peças */
 
@@ -80,7 +72,7 @@ tr:nth-child(even) td:nth-child(even) {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
     box-sizing: border-box; 
 
-    z-index: 1;
+    z-index: 0;
 }
 
 .peca.branca {

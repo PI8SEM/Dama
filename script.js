@@ -1,5 +1,5 @@
 var config = {
-    tabuleiro: document.querySelectorAll("td"),
+    tabuleiro: function(){return document.querySelectorAll("td")},
     posicoesTabuleiro: [],
     pecaPreta: function () {
         let peca = document.createElement('div')
@@ -20,9 +20,6 @@ function criarTabuleiro(){
     let table = document.createElement("table");
     tabuleiro.appendChild(table);
 
-    let linha = document.createElement("tr")
-    let posicao = document.createElement("td")
-
     for (let l = 0; l < 8; l++) {
         let linha = document.createElement("tr");
 
@@ -31,11 +28,33 @@ function criarTabuleiro(){
             posicao.dataset.linha = l;
             posicao.dataset.coluna = c;
 
+        
             linha.appendChild(posicao);
+
+            if (l%2 == 0){
+
+                if(c%2 == 0) posicao.classList.add("casaBranca")
+
+                if(c%2 != 0) posicao.classList.add("casaPreta")
+
+            } else {
+
+                if(c%2 == 0) posicao.classList.add("casaPreta")
+
+                if(c%2 != 0) posicao.classList.add("casaBranca")
+
+            }
+
+            posicao.appendChild(config.pecaPreta())
+
+
+
         }
 
         table.appendChild(linha);
     }
+
+    // if (linha)
 
     document.getElementById("principal").appendChild(tabuleiro)
 }
@@ -45,11 +64,8 @@ function criarManipuladorPosicoes(objetoPosicoes){
     objetoPosicoes.forEach(posicao => {
 
         posicao.addEventListener("click", (e) => {
-            manipuladorTabuleiro(posicao, config.pecaBranca(), e) // precisa passar segundo parametro com base na peça que usuario escolher
-        
-        
-        
-        
+
+            manipuladorTabuleiro(e) // precisa passar segundo parametro com base na peça que usuario escolher      
         
         })
 
@@ -89,25 +105,35 @@ function inserirPecasTabuleiro(){
 
 }
 
-function manipuladorTabuleiro(posicaoAtual, corPeca, posicao = null){
+function manipuladorTabuleiro(e){
 
-    posicaoAtual;
+    var curretPosicao = e.target.dataset
+    var filhoCasa = e.target.innerHTML;
 
-    proximaPosicao;
 
+    // if(!filhoCasa){
+    //     return
+    // }
+
+    console.log(filhoCasa)
+
+    // e[peca] = filhoCasa;
+
+
+    // if()
 
 
     return {
-        peça: (function() {
-            posicaoAtual.appendChild(corPeca);
-        })(),
-        posicaoAtual: posicaoAtual,
-        proximaPosicao: posicao
-    };
+        peca: e,
+        posicao: curretPosicao,
+    }
+
+
+
+
 }
 
 criarTabuleiro()
-
-criarManipuladorPosicoes(config.tabuleiro)
+criarManipuladorPosicoes(config.tabuleiro())
 
 inserirPecasTabuleiro()
