@@ -13,6 +13,7 @@ var config = {
     }
 }
 
+
 function criarManipuladorPosicoes(objetoPosicoes){
     objetoPosicoes.forEach(posicao => {
 
