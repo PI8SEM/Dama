@@ -4,13 +4,31 @@ var config = {
     pecaPreta: function () {
         let peca = document.createElement('div')
         peca.classList.add('peca', 'preta')
+        peca.dataset.identificador = 'preta'
+        peca.style.cursor = 'pointer'
         return peca
     },
     pecaBranca: function() {
         let peca = document.createElement('div')
         peca.classList.add('peca', 'branca')
+        peca.dataset.identificador = 'branca'
+        peca.style.cursor = 'pointer'
         return peca
     }
+}
+
+function criaEventos() {
+    let containerMain = document.querySelector('main');
+    containerMain.addEventListener('click', (event) => {
+        if(event.target.matches('.peca')) {
+            let corPeca = event.target.dataset.identificador;
+            let elementoCasaPeca = event.target.parentElement;
+            let linhaPeca = Number(elementoCasaPeca.dataset.linha);
+            let colunaPeca = Number(elementoCasaPeca.dataset.coluna);
+            verificaJogabilidade(corPeca, linhaPeca, colunaPeca);
+        } else if(event.target.matches('.casaPreta'))
+            console.log('vc clicou numa casa');
+    })
 }
 
 function criarTabuleiro(){
@@ -25,8 +43,8 @@ function criarTabuleiro(){
 
         for (let c = 0; c < 8; c++) {
             let posicao = document.createElement("td");
-            posicao.dataset.linha = l;
-            posicao.dataset.coluna = c;
+            posicao.dataset.linha = l+1;
+            posicao.dataset.coluna = c+1;
 
         
             linha.appendChild(posicao);
@@ -45,7 +63,6 @@ function criarTabuleiro(){
 
             }
 
-            posicao.appendChild(config.pecaPreta())
 
 
 
@@ -54,86 +71,44 @@ function criarTabuleiro(){
         table.appendChild(linha);
     }
 
-    // if (linha)
+
 
     document.getElementById("principal").appendChild(tabuleiro)
 }
 
 
-function criarManipuladorPosicoes(objetoPosicoes){
-    objetoPosicoes.forEach(posicao => {
-
-        posicao.addEventListener("click", (e) => {
-
-            manipuladorTabuleiro(e) // precisa passar segundo parametro com base na peça que usuario escolher      
-        
-        })
-
-        config.posicoesTabuleiro.push(posicao)
-    });
-}
-
-function inserirPecasTabuleiro(){
-
-    const casas = config.posicoesTabuleiro;
-
-    // Posiciona as 12 peças pretas nas 3 primeiras linhas
-    for (let i = 0; i < 24; i++) {
-        // Pega a linha (de 0 a 7) e a coluna (de 0 a 7) a partir do índice
-        const linha = Math.floor(i / 8);
-        const coluna = i % 8;
-
-        // Condição para posicionar apenas nas casas jogáveis
-        if ((linha + coluna) % 2 !== 0) {
-            if (linha < 3) { // 3 primeiras linhas
-                manipuladorTabuleiro(casas[i], config.pecaPreta());
-            }
+function inserirPecasTabuleiro(config){
+    const casasJogaveis = document.querySelectorAll('.casaPreta');
+    casasJogaveis.forEach(casasIniciais => {
+        let identificaLinha = casasIniciais.dataset.linha;
+        if (identificaLinha <= 3){
+            casasIniciais.appendChild(config.pecaPreta());
         }
-    }
-
-    // Posiciona as 12 peças brancas nas 3 últimas linhas
-    for (let i = 40; i < 64; i++) {
-        const linha = Math.floor(i / 8);
-        const coluna = i % 8;
-
-        if ((linha + coluna) % 2 !== 0) {
-            if (linha > 4) { // 3 últimas linhas
-                manipuladorTabuleiro(casas[i], config.pecaBranca());
-            }
+        if (identificaLinha >= 6) {
+            casasIniciais.appendChild(config.pecaBranca());
         }
-    }
+    })
 
 }
 
-function manipuladorTabuleiro(e){
-
-    var curretPosicao = e.target.dataset
-    var filhoCasa = e.target.innerHTML;
-
-
-    // if(!filhoCasa){
-    //     return
-    // }
-
-    console.log(filhoCasa)
-
-    // e[peca] = filhoCasa;
-
-
-    // if()
-
-
-    return {
-        peca: e,
-        posicao: curretPosicao,
-    }
-
-
-
-
+function manipulaPosicao(corPeca, linhaPeca, colunaPeca) {
+     
 }
 
-criarTabuleiro()
-criarManipuladorPosicoes(config.tabuleiro())
+function verificaJogabilidade(corPeca, linhaPeca, colunaPeca) {
+    if(corPeca == 'preta'){
+        console.log(linhaPeca+1, colunaPeca-1, colunaPeca+1)
+        const proximaLinha =  document.querySelector(`[data-linha="${linhaPeca+1}"]`);
+        const menorColuna = document.querySelector(`[data-coluna="${colunaPeca-1}"]`);
+        const maiorColuna = document.querySelector(`[data-coluna="${colunaPeca+1}"]`);
+        console.log(proximaLinha, menorColuna, maiorColuna);
+    }
+}
 
-inserirPecasTabuleiro()
+function iniciaJogo() {
+    criaEventos();
+    criarTabuleiro();
+    inserirPecasTabuleiro(config);
+}
+
+document.addEventListener('DOMContentLoaded', iniciaJogo);
