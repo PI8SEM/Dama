@@ -23,9 +23,9 @@ function criaEventos() {
         if(event.target.matches('.peca')) {
             let corPeca = event.target.dataset.identificador;
             let elementoCasaPeca = event.target.parentElement;
-            let linhaPeca = Number(elementoCasaPeca.dataset.linha);
-            let colunaPeca = Number(elementoCasaPeca.dataset.coluna);
-            verificaJogabilidade(corPeca, linhaPeca, colunaPeca);
+            // let linhaPeca = Number(elementoCasaPeca.dataset.linha);
+            // let colunaPeca = Number(elementoCasaPeca.dataset.coluna);
+            verificaJogabilidade(corPeca, elementoCasaPeca);
         } else if(event.target.matches('.casaPreta'))
             console.log('vc clicou numa casa');
     })
@@ -95,14 +95,27 @@ function manipulaPosicao(corPeca, linhaPeca, colunaPeca) {
      
 }
 
-function verificaJogabilidade(corPeca, linhaPeca, colunaPeca) {
-    if(corPeca == 'preta'){
-        console.log(linhaPeca+1, colunaPeca-1, colunaPeca+1)
-        const proximaLinha =  document.querySelector(`[data-linha="${linhaPeca+1}"]`);
-        const menorColuna = document.querySelector(`[data-coluna="${colunaPeca-1}"]`);
-        const maiorColuna = document.querySelector(`[data-coluna="${colunaPeca+1}"]`);
-        console.log(proximaLinha, menorColuna, maiorColuna);
+function verificaJogabilidade(corPeca, casaAtual) {
+    let proximaLinha
+    let linhaAtual = Number(casaAtual.dataset.linha);
+    let colunaAtual = Number(casaAtual.dataset.coluna);
+    let movPossiveis = [];
+    if (corPeca == 'preta') {
+        proximaLinha = linhaAtual + 1
+
+    } else { 
+        proximaLinha = linhaAtual - 1
     }
+    //const timesGrupo = classificacaoData.filter(time => time.grupo === element)
+    let elementosProxLinha = document.querySelectorAll(`[data-linha="${proximaLinha}"]`);
+    
+    elementosProxLinha.forEach((e) =>{
+        if(Number(e.dataset.coluna) == colunaAtual +1 || Number(e.dataset.coluna) == colunaAtual -1){
+            (e.hasChildNodes()) && (e.dataset.identificador != corPeca) ? '' : movPossiveis.push(e); //adiciona as casas possíveis na lista
+        }
+    })
+    
+    
 }
 
 function iniciaJogo() {
