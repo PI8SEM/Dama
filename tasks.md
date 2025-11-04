@@ -1,22 +1,22 @@
 ### Projeto Jogo de Damas
 
-- [ ] **1. Criar estrutura básica do projeto**
+- [X] **1. Criar estrutura básica do projeto**
     - [x] Arquivos `index.html`, `style.css`, `script.js`.
     - [x] Configurar layout do tabuleiro 8x8. 
     - [x] Criar HUD com informações de turno e botão “Reiniciar”.
 
 - [ ] **2. Estilizar tabuleiro e peças**
     - [x] Definir casas claras e escuras.
-    - [ ] Estilizar peças vermelhas e pretas em formato circular.
+    - [X] Estilizar peças vermelhas e pretas em formato circular.
     - [ ] Criar estilo visual diferenciado para dama (ex.: borda dourada).
     - [ ] Garantir que o tabuleiro seja centralizado e responsivo (desktop e mobile).
 
 - [ ] **3. Implementar estado e lógica de movimentação**
     - [X] Representar o tabuleiro em uma matriz 8x8 no JavaScript.
-    - [ ] Permitir seleção apenas da peça do jogador da vez.
-    - [ ] Calcular e destacar movimentos válidos (diagonais livres).
-    - [ ] Realizar movimentação ao clicar no destino válido.
-    - [ ] Alternar turno automaticamente após a jogada.
+    - [X] Permitir seleção apenas da peça do jogador da vez.
+    - [X] Calcular e destacar movimentos válidos (diagonais livres).
+    - [X] Realizar movimentação ao clicar no destino válido.
+    - [X] Alternar turno automaticamente após a jogada.
 
 - [ ] **4. Implementar regras de captura**
     - [ ] Permitir captura ao pular sobre peça adversária.
