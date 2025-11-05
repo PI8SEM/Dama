@@ -53,6 +53,7 @@ td{
 
 td.possivel{
     background-color: lightgreen; 
+    cursor: pointer;
 }
 
 td.selecionada {

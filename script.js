@@ -31,14 +31,12 @@ function criaEventos() {
             let corPeca = event.target.dataset.identificador;
             let elementoCasaPeca = event.target.parentElement;
             let tipoPeca = event.target.dataset.tipo
-            // let linhaPeca = Number(elementoCasaPeca.dataset.linha);
-            // let colunaPeca = Number(elementoCasaPeca.dataset.coluna);
             if (corPeca === config.turno) {
-                verificaJogabilidade(config.turno, corPeca, elementoCasaPeca, tipoPeca);
+                verificaJogabilidade(corPeca, elementoCasaPeca, tipoPeca);
             } else {
                 return
             }
-        } else if(event.target.matches('.casaPreta, .possivel')){
+        } else if(event.target.matches('.possivel')){
             let casaDestino = event.target;
             manipulaPosicao(casaDestino)
         }
@@ -118,7 +116,7 @@ function manipulaPosicao(casaDestino) {
     config.pecaSelecionada = null;
 }
 
-function verificaJogabilidade(turno, corPeca, casaAtual, tipoPeca) {
+function verificaJogabilidade(corPeca, casaAtual, tipoPeca) {
     resetJogada();
     
     config.pecaSelecionada = casaAtual.querySelector('.peca');
@@ -131,17 +129,30 @@ function verificaJogabilidade(turno, corPeca, casaAtual, tipoPeca) {
         let casaEsquerda = document.querySelector(`[data-linha="${linhaAtual + direcao}"][data-coluna="${colunaAtual - 1}"]`);
         let casaDireita = document.querySelector(`[data-linha="${linhaAtual + direcao}"][data-coluna="${colunaAtual + 1}"]`);
         
-        if (casaEsquerda && !casaEsquerda.hasChildNodes()) {
-            movPossiveis.push(casaEsquerda);
-            casaAtual.classList.add('selecionada');
-            casaEsquerda.classList.add('possivel');
+        let filhoDireita = casaDireita.children[0];
+        console.log(casaEsquerda.children[0], casaDireita);
+        if (casaEsquerda && casaEsquerda.hasChildNodes()) {
+            let filhoEsquerda = casaEsquerda.children[0];
+            let corFilho = filhoEsquerda.dataset.identificador;
+            console.log(corFilho);
+            if(corFilho != corPeca) {
+                direcao *= 3;
+            }
+            // casaAtual.classList.add('selecionada');
+            // casaEsquerda.classList.add('possivel');
         }
+        
+        movPossiveis.push(casaEsquerda); 
+        casaAtual.classList.add('selecionada');
+        casaEsquerda.classList.add('possivel');
         if (casaDireita && !casaDireita.hasChildNodes()){ 
             movPossiveis.push(casaDireita);
             casaAtual.classList.add('selecionada');
             casaDireita.classList.add('possivel');
         }}
-
+    if (tipoPeca === 'dama'){
+        return
+    }
 }
 
 function iniciaJogo() {
