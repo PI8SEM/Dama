@@ -93,3 +93,7 @@ td.selecionada {
     background-image: radial-gradient(circle at 50% 40%, #636D6F, #303638 90%);
     border: 1px solid #717C7E;
 }
+
+td.dama {
+    background-color: green;
+}

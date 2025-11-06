@@ -39,6 +39,9 @@ function criaEventos() {
         } else if(event.target.matches('.possivel')){
             let casaDestino = event.target;
             manipulaPosicao(casaDestino)
+        } else if(event.target.matches('.promocao, .casaPreta')){
+            let casaPromocao = event.target;
+            promovePeca(casaPromocao);
         }
     })
 }
@@ -63,17 +66,19 @@ function criarTabuleiro(){
 
             if (l%2 == 0){
 
-                if(c%2 == 0) posicao.classList.add("casaBranca")
+                if(c%2 == 0) posicao.classList.add("casaBranca");
 
-                if(c%2 != 0) posicao.classList.add("casaPreta")
+                if(c%2 != 0) posicao.classList.add("casaPreta");
 
             } else {
 
-                if(c%2 == 0) posicao.classList.add("casaPreta")
+                if(c%2 == 0) posicao.classList.add("casaPreta");
 
-                if(c%2 != 0) posicao.classList.add("casaBranca")
+                if(c%2 != 0) posicao.classList.add("casaBranca");
 
             }
+            if (l == 0 || l == 7) posicao.classList.add("promocao");
+            
         }
 
         table.appendChild(linha);
@@ -106,15 +111,26 @@ function inserirPecasTabuleiro(config){
 
 function manipulaPosicao(casaDestino) {
     if(!config.pecaSelecionada) return;
-
+    
+    // mover a peça
     casaDestino.appendChild(config.pecaSelecionada);
 
+    // se houve captura, remover peça inimiga
+    let linhaCaptura = casaDestino.dataset.capturaLinha;
+    let colunaCaptura = casaDestino.dataset.capturaColuna;
+
+    if (linhaCaptura && colunaCaptura) {
+        let casaCaptura = document.querySelector(`[data-linha="${linhaCaptura}"][data-coluna="${colunaCaptura}"]`);
+        if (casaCaptura && casaCaptura.hasChildNodes()) {
+            casaCaptura.firstChild.remove();
+        }
+    }
+
     resetJogada();
-
     config.alternarTurno();
-
     config.pecaSelecionada = null;
 }
+
 
 function verificaJogabilidade(corPeca, casaAtual, tipoPeca) {
     resetJogada();
@@ -122,36 +138,51 @@ function verificaJogabilidade(corPeca, casaAtual, tipoPeca) {
     config.pecaSelecionada = casaAtual.querySelector('.peca');
     let linhaAtual = Number(casaAtual.dataset.linha);
     let colunaAtual = Number(casaAtual.dataset.coluna);
-    let movPossiveis = [];
-    if (tipoPeca === 'peao') {    
-        let direcao = (corPeca === 'pretas') ? 1 : -1;
-        
-        let casaEsquerda = document.querySelector(`[data-linha="${linhaAtual + direcao}"][data-coluna="${colunaAtual - 1}"]`);
-        let casaDireita = document.querySelector(`[data-linha="${linhaAtual + direcao}"][data-coluna="${colunaAtual + 1}"]`);
-        
-        let filhoDireita = casaDireita.children[0];
-        console.log(casaEsquerda.children[0], casaDireita);
-        if (casaEsquerda && casaEsquerda.hasChildNodes()) {
-            let filhoEsquerda = casaEsquerda.children[0];
-            let corFilho = filhoEsquerda.dataset.identificador;
-            console.log(corFilho);
-            if(corFilho != corPeca) {
-                direcao *= 3;
+    let direcao = (corPeca === 'pretas') ? 1 : -1; // pretas descem, brancas sobem
+
+    casaAtual.classList.add('selecionada');
+    config.pecaCaptura = null; // reseta possíveis capturas
+
+    // --- MOVIMENTAÇÃO NORMAL ---
+    let diagonais = [
+        { linha: linhaAtual + direcao, coluna: colunaAtual - 1 },
+        { linha: linhaAtual + direcao, coluna: colunaAtual + 1 }
+    ];
+
+    diagonais.forEach(diag => {
+        let casa = document.querySelector(`[data-linha="${diag.linha}"][data-coluna="${diag.coluna}"]`);
+        if (!casa) return;
+
+        if (!casa.hasChildNodes()) {
+            // casa livre: movimento simples
+            casa.classList.add('possivel');
+        } else {
+            // há uma peça — verificar se é inimiga e se pode capturar
+            let pecaNaDiagonal = casa.querySelector('.peca');
+            if (pecaNaDiagonal.dataset.identificador !== corPeca) {
+                // verificar casa depois dela
+                let linhaApos = diag.linha + direcao;
+                let colunaApos = diag.coluna + (diag.coluna > colunaAtual ? 1 : -1);
+                let casaApos = document.querySelector(`[data-linha="${linhaApos}"][data-coluna="${colunaApos}"]`);
+                
+                if (casaApos && !casaApos.hasChildNodes()) {
+                    // captura disponível
+                    casaApos.classList.add('possivel');
+                    // armazena qual peça será capturada se o jogador clicar nesta casa
+                    casaApos.dataset.capturaLinha = diag.linha;
+                    casaApos.dataset.capturaColuna = diag.coluna;
+                }
             }
-            // casaAtual.classList.add('selecionada');
-            // casaEsquerda.classList.add('possivel');
         }
-        
-        movPossiveis.push(casaEsquerda); 
-        casaAtual.classList.add('selecionada');
-        casaEsquerda.classList.add('possivel');
-        if (casaDireita && !casaDireita.hasChildNodes()){ 
-            movPossiveis.push(casaDireita);
-            casaAtual.classList.add('selecionada');
-            casaDireita.classList.add('possivel');
-        }}
-    if (tipoPeca === 'dama'){
-        return
+    });
+}
+
+function promovePeca(casaPromocao){
+    let promove = (casaPromocao.dataset.linha == 1) ? 'brancas' : 'pretas';
+    console.log(casaPromocao.firstChild.identificador);
+    if(casaPromocao.hasChildNodes() && casaPromocao.firstChild.identificador == promove){
+        let pecaPromovida = casaPromocao.firstChild
+        pecaPromovida.classList.add('dama')
     }
 }
 
