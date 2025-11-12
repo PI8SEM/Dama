@@ -1,5 +1,5 @@
 body {
-    background-color: lightgray;
+    background-color: rgb(66, 66, 66);
 }
 
 main{
@@ -84,16 +84,19 @@ td.selecionada {
 
 .peca.branca {
     background-color: #F5F5F7;
-    background-image: radial-gradient(circle at 50% 40%, #FFFFFF, #E8E9EB 90%);
+    /* background-image: radial-gradient(circle at 50% 40%, #FFFFFF, #E8E9EB 90%); */
     border: 1px solid #B0B8C4;
 }
 
 .peca.preta {
     background-color: #414A4C;
-    background-image: radial-gradient(circle at 50% 40%, #636D6F, #303638 90%);
+    /* background-image: radial-gradient(circle at 50% 40%, #636D6F, #303638 90%); */
     border: 1px solid #717C7E;
 }
 
-td.dama {
-    background-color: green;
+div.dama {
+    border: 2px solid gold !important;
+    background: center / 70% no-repeat 
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23FFD700" d="M64 384h384l-32-224-80 80-80-128-80 128-80-80-32 224z"/><rect x="64" y="384" width="384" height="32" fill="%23B8860B"/></svg>');
+  
 }
