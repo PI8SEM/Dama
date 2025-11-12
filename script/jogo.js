@@ -39,7 +39,10 @@ function criaEventos() {
         } else if(event.target.matches('.possivel')){
             let casaDestino = event.target;
             manipulaPosicao(casaDestino);
-        } 
+        } else if(event.target.matches('#reset')){
+            // reiniciarPartida();
+            location.reload();
+        }
     })
 }
 
@@ -201,6 +204,29 @@ function promovePeca(casaPromocao){
         pecaPromovida.dataset.tipo = 'dama'
         console.log(pecaPromovida);
     }
+}
+
+function reiniciarPartida() {
+    // const containerBody = document.querySelector('body');
+    // const iteracaoUsuario = document.createElement('div');
+    // iteracaoUsuario.classList.add('reiniciar-partida');
+    // const containerMensagem = document.createElement('div');
+    // containerMensagem.innerHTML = `<h3>Tem certeza que deseja reiniciar o jogo?</h3>`;
+
+    // iteracaoUsuario.appendChild(containerMensagem);
+    // const containerBotoes = document.createElement('div');
+    // iteracaoUsuario.appendChild(containerBotoes);
+
+    // const btnNegacao = document.createElement('button');
+    // btnNegacao.innerHTML = '<h3>Não</h3>'
+    // containerBotoes.appendChild(btnNegacao);
+
+    // const btnAfirmacao = document.createElement('button');
+    // btnAfirmacao.innerHTML = '<h3>Sim</h3>'
+    // containerBotoes.appendChild(btnAfirmacao);
+
+    // containerBody.appendChild(iteracaoUsuario);
+    return;
 }
 
 function iniciaJogo() {

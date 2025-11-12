@@ -100,3 +100,17 @@ div.dama {
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23FFD700" d="M64 384h384l-32-224-80 80-80-128-80 128-80-80-32 224z"/><rect x="64" y="384" width="384" height="32" fill="%23B8860B"/></svg>');
   
 }
+
+div.reiniciar-partida {
+    background-color: white;
+    height: 100px;
+    width: 290px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 1001;
+    
+}
