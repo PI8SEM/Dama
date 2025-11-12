@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/inicio.css">
+    <title>Bem-Vindo!</title>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Escolha o modo de jogo!</h1>
+        </header>
+        <section id="menu">
+            <div class="habilitado">
+                <h3>Jogador vs Jogador (offline)</h3>
+            </div>
+            <div class="desabilitado">
+                <h3>Jogador vs Máquina</h3>
+            </div>
+            <div class="desabilitado">
+                <h3>Jogador vs Jogador (online)</h3>
+            </div>
+        </section>
+    </main>
+    <script>
+        let escolha = document.querySelector('.habilitado').addEventListener('click', function(){
+            window.location.href = "./html/jogo.html"
+        })
+    </script>
+</body>
+</html>
