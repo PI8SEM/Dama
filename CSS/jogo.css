@@ -23,19 +23,20 @@ main{
 }
 
 table{
-    width: 500px;
-    height: 500px;
+    width: 408px;
+    height: 408px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 3px solid #000000;
+
 
 }
 
 tr{
     width: 400px;
     height: 50px;
-
     display: flex;
     flex-direction: row;
 }
@@ -43,7 +44,6 @@ tr{
 td{
     width: 50px;
     height: 50px;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,11 +61,11 @@ td.selecionada {
 }
 
 .casaPreta {
-    background-color: #3A405A ; /* Cor escura */
+    background-color: #6b4901 ; /* Cor escura */
 }
 
 .casaBranca {
-    background-color: #eee; /* Cor clara */
+    background-color: #e2c27e; /* Cor clara */
 }
 
 
@@ -74,11 +74,9 @@ td.selecionada {
 .peca {
     width: 40px;
     height: 40px;
-    
     border-radius: 50%;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
     box-sizing: border-box; 
-
     z-index: 0;
 }
 
@@ -89,7 +87,7 @@ td.selecionada {
 }
 
 .peca.preta {
-    background-color: #414A4C;
+    background-color: #0e0d0d;
     /* background-image: radial-gradient(circle at 50% 40%, #636D6F, #303638 90%); */
     border: 1px solid #717C7E;
 }
