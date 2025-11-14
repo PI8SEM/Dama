@@ -40,14 +40,15 @@ function criaEventos() {
             let casaDestino = event.target;
             manipulaPosicao(casaDestino);
         } else if(event.target.matches('#reset')){
-            // reiniciarPartida();
-            location.reload();
+            reiniciarPartida();
+            // location.reload();
         }
     })
 }
 
 function criarTabuleiro(){
     let tabuleiro = document.createElement("section");
+    tabuleiro.id = 'tabuleiro';
     tabuleiro.classList.add("tabuleiro");
 
     let table = document.createElement("table");
@@ -104,10 +105,10 @@ function inserirPecasTabuleiro(config){
     const casasJogaveis = document.querySelectorAll('.casaPreta');
     casasJogaveis.forEach(casasIniciais => {
         let identificaLinha = casasIniciais.dataset.linha;
-        if (identificaLinha <= 3){
+        if (identificaLinha /*<= 3*/ <=1){
             casasIniciais.appendChild(config.pecaPreta());
         }
-        if (identificaLinha >= 6) {
+        if (identificaLinha /*>= 6*/ >=8) {
             casasIniciais.appendChild(config.pecaBranca());
         }
     })
@@ -133,6 +134,7 @@ function manipulaPosicao(casaDestino) {
     }
 
     resetJogada();
+    verificaVencedor();
     config.alternarTurno();
     config.pecaSelecionada = null;
 }
@@ -207,26 +209,88 @@ function promovePeca(casaPromocao){
 }
 
 function reiniciarPartida() {
-    // const containerBody = document.querySelector('body');
-    // const iteracaoUsuario = document.createElement('div');
-    // iteracaoUsuario.classList.add('reiniciar-partida');
-    // const containerMensagem = document.createElement('div');
-    // containerMensagem.innerHTML = `<h3>Tem certeza que deseja reiniciar o jogo?</h3>`;
+    console.log('clicou')
+    const containerBody = document.querySelector('body');
+    const iteracaoUsuario = document.createElement('dialog');
+    iteracaoUsuario.classList.add('reiniciar-partida');
+    const containerMensagem = document.createElement('div');
+    containerMensagem.innerHTML = `<h3>Tem certeza que deseja reiniciar o jogo?</h3>`;
 
-    // iteracaoUsuario.appendChild(containerMensagem);
-    // const containerBotoes = document.createElement('div');
-    // iteracaoUsuario.appendChild(containerBotoes);
+    iteracaoUsuario.appendChild(containerMensagem);
+    const containerBotoes = document.createElement('div');
+    containerBotoes.classList.add('container-botoes');
+    iteracaoUsuario.appendChild(containerBotoes);
 
-    // const btnNegacao = document.createElement('button');
-    // btnNegacao.innerHTML = '<h3>Não</h3>'
-    // containerBotoes.appendChild(btnNegacao);
+    const btnNegacao = document.createElement('button');
+    btnNegacao.textContent = 'Não'
+    btnNegacao.classList.add('nao');
+    containerBotoes.appendChild(btnNegacao);
 
-    // const btnAfirmacao = document.createElement('button');
-    // btnAfirmacao.innerHTML = '<h3>Sim</h3>'
-    // containerBotoes.appendChild(btnAfirmacao);
+    const btnAfirmacao = document.createElement('button');
+    btnAfirmacao.textContent = 'Sim';
+    btnAfirmacao.classList.add('sim');
+    containerBotoes.appendChild(btnAfirmacao);
+    
 
-    // containerBody.appendChild(iteracaoUsuario);
-    return;
+    containerBody.appendChild(iteracaoUsuario);
+    iteracaoUsuario.showModal();
+
+    iteracaoUsuario.addEventListener('click', function(event){
+        const botao = event.target.closest('button');
+        if (!botao) return;
+
+        if(botao.classList.contains('nao')){
+            iteracaoUsuario.close();
+        } else if(botao.classList.contains('sim')){
+            resetTabuleiro();
+            criarTabuleiro();
+            inserirPecasTabuleiro(config);
+            iteracaoUsuario.close();
+        }
+    })
+    
+}
+
+function verificaVencedor(){
+    let contadorPretas = document.querySelectorAll('.peca.preta').length;
+    let contadorBrancas = document.querySelectorAll('.peca.branca').length;
+
+    let modalVitoria = document.createElement('dialog');
+    modalVitoria.classList.add('modal-vitoria');
+
+    let containerModVitoria = document.createElement('div');
+    containerModVitoria.classList.add('container-vitoria');
+    modalVitoria.appendChild(containerModVitoria);
+
+    let mensagemVitoria = document.createElement('h3');
+    containerModVitoria.appendChild(mensagemVitoria);
+
+    let botaoNovaPartida = document.createElement('button');
+    botaoNovaPartida.classList.add('nova-partida');
+    botaoNovaPartida.textContent = 'Nova Partida';
+    containerModVitoria.appendChild(botaoNovaPartida);
+
+    if(contadorBrancas == 0) {
+        mensagemVitoria.textContent = 'As peças Pretas Ganharam';
+    } else if (contadorPretas == 0){
+        mensagemVitoria.textContent = 'As peças Brancas Ganharam';
+    } else {return}
+    document.querySelector('body').appendChild(modalVitoria);
+    modalVitoria.showModal();
+    
+    botaoNovaPartida.addEventListener('click', function(){
+        resetTabuleiro();
+        criarTabuleiro();
+        inserirPecasTabuleiro(config);
+        modalVitoria.close();
+    })
+}
+
+function resetTabuleiro(){
+    const tabuleiro = document.querySelector('#tabuleiro');
+    tabuleiro.remove();
+    config.turno = 'brancas';
+    document.querySelector('#controle-turno').textContent = 'brancas';
 }
 
 function iniciaJogo() {

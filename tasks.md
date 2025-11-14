@@ -30,6 +30,6 @@
     - [ ] Permitir movimentação estendida da dama (para frente e para trás).
 
 - [ ] **6. Implementar reinício e fim de jogo**
-    - [ ] Botão “Reiniciar” deve restaurar o estado inicial do tabuleiro.
-    - [ ] Detectar fim de jogo (sem peças ou sem movimentos possíveis).
-    - [ ] Exibir mensagem de vitória do jogador.
+    - [X] Botão “Reiniciar” deve restaurar o estado inicial do tabuleiro.
+    - [X] Detectar fim de jogo (sem peças ou sem movimentos possíveis).
+    - [X] Exibir mensagem de vitória do jogador.
