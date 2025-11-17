@@ -260,14 +260,23 @@ button.nao {
 /* ========== RESPONSIVIDADE ========== */
 @media (max-width: 540px) {
     .tabuleiro { 
-        width: 94vw; 
+        width: 100vw; 
         aspect-ratio: 1/1; 
         padding: 6px; 
     }
-    #principal { padding: 8px; }
-    #HUD { gap: 8px; }
-    .turno p { font-size: 1rem; }
-    #reset { padding: 7px 12px; font-size: 0.95rem; }
+    #principal { 
+        padding: 8px; 
+    }
+    #HUD { 
+        width: 409px;
+    }
+    .turno p { 
+        font-size: 1rem; 
+    }
+    #reset { 
+        padding: 7px 12px; 
+        font-size: 0.95rem; 
+    }
 }
 
 /* esconder focus outline default em elementos clicáveis do jogo */
