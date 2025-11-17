@@ -1,92 +1,160 @@
-@import url('https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap');
+/* ========== FONTES E RESET BÁSICO ========== */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Alan Sans', Arial, Sans-serif;
+    font-family: 'Titillium Web', Arial, Sans-serif;
+}
+
+/* ========== LAYOUT GERAL ========== */
+body {
+    background: linear-gradient(180deg,#2d2d2d,#212121);
+    color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
 
 main {
     display: flex;
     flex-direction: column;
-}
-
-header {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 20vh;
+    width: 100%;
+    max-width: 600px; /* Limita a largura do menu em telas grandes */
 }
 
+/* ========== CABEÇALHO (TÍTULO) ========== */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffde7a; /* Destaque dourado */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+/* ========== SEÇÃO DO MENU ========== */
 section#menu {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    height: 80vh;
+    gap: 1.5rem; /* Espaçamento entre os botões */
+    width: 100%;
 }
 
-div {
-    width: 270px;
-    border: 1px solid black;
-    padding: 0.5rem;
-    border-radius: 6px;
+/* Estilo COMUM para todos os botões do menu */
+section#menu > div {
+    width: min(90%, 320px); /* Responsivo, com largura máxima */
+    border: 1px solid #555;
+    padding: 1.25rem;
+    border-radius: 8px;
     text-align: center;
+    font-size: 1.15rem;
+    font-weight: 600;
+    transition: all 0.15s ease-out;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+section#menu > div h3 {
+    font-weight: 600;
+}
+
+/* ========== BOTÕES HABILITADOS ========== */
+div.habilitado {
+    background-color: #3a3a3a;
+    color: #f5f5f5;
     cursor: pointer;
 }
 
 div.habilitado:hover {
-    background-color: lightgreen;
+    background-color: #444;
+    border-color: #ffde7a; /* Borda dourada no hover */
+    color: #ffde7a; /* Texto dourado no hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
+/* ========== BOTÕES DESABILITADOS ========== */
 div.desabilitado {
+    background-color: #2a2a2a; /* Mais escuro */
+    color: #666; /* Texto apagado */
+    border-color: #444;
     cursor: not-allowed;
-    background-color: lightgray;
-    color: gray;
+    user-select: none; /* Impede a seleção de texto */
 }
 
-
+/* ========== MODAL DE REGRAS (DIALOG) ========== */
 dialog {
-    width: 80%;
+    background: #3a3a3a;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
     max-width: 600px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    overflow: auto;
-    border: none;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.55);
     
+    /* Centralização */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;  
-    max-height: 80vh;  
+    max-height: 80vh; 
+    overflow-y: auto; /* Adiciona scroll se o conteúdo for maior */
+}
+
+/* Fundo escurecido ao abrir o modal */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
 }
 
 dialog h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     text-align: center;
-    margin-bottom: 1rem;
-}
-dialog p {
-    margin-bottom: 1rem;
-    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    color: #ffde7a; /* Título do modal dourado */
 }
 
+dialog p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+dialog p strong {
+    color: #f5f5f5; /* Deixa o "tópico" mais claro */
+    font-weight: 700;
+}
+
+/* ========== BOTÃO FECHAR (DIALOG) ========== */
 #fecharDialog {
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    padding: 12px;
+    margin-top: 1rem; /* Espaço antes do botão */
+    
+    /* Mesmo estilo do botão "Reiniciar" do jogo */
+    background: linear-gradient(180deg,#ff6b6b,#ff3b3b);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+    transition: transform .12s ease, box-shadow .12s ease;
 }
 
 #fecharDialog:hover {
-    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.4);
 }
