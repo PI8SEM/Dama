@@ -21,15 +21,37 @@
             <div class="desabilitado">
                 <h3>Jogador vs Jogador (online)</h3>
             </div>
-            <div class="habilitado">
+            <div class="habilitado" id="regrasBtn">
                 <h3>Regras do jogo</h3>
             </div>
         </section>
     </main>
-    <script>
-        let escolha = document.querySelector('.habilitado').addEventListener('click', function(){
-            window.location.href = "./HTML/jogo.html"
-        })
-    </script>
+
+    <!-- Dialog com as regras do jogo -->
+    <dialog id="dialogRegras">
+        <h2>Regras do Jogo</h2>
+    
+            <p><strong>Objetivo do Jogo:</strong><br>
+            O objetivo do jogo é capturar ou imobilizar todas as peças do adversário, ou deixá-lo sem movimentos possíveis.</p>
+
+            <p><strong>Tabuleiro:</strong><br>
+            O tabuleiro é quadrado, com 8x8 casas, totalizando 64 casas no total. As casas devem ser alternadamente claras e escuras, e as peças são colocadas apenas nas casas escuras.</p>
+
+            <p><strong>Movimentação das Peças:</strong><br>
+            As peças podem mover-se apenas para frente, em linha reta, nas casas escuras.</p>
+
+            <p><strong>Captura:</strong><br>
+            Para capturar uma peça adversária, a sua peça deve pular sobre a peça inimiga para uma casa vazia imediatamente após a peça adversária.</p>
+
+            <p><strong>Peças Damas:</strong><br>
+            Quando uma peça chega à última linha do lado adversário, ela se transforma em dama.</p>
+
+            <p><strong>Fim de Jogo:</strong><br>
+            O jogo pode terminar de três formas: captura total, imobilização, ou empate.</p>
+
+        <button id="fecharDialog">Fechar</button>
+    </dialog>
+
+    <script src="../script/script.js" ></script>
 </body>
 </html>

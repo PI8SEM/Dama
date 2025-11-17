@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,7 +20,7 @@ header {
     height: 20vh;
 }
 
-section#menu{
+section#menu {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,7 +38,7 @@ div {
     cursor: pointer;
 }
 
-div.habilitado:hover{
+div.habilitado:hover {
     background-color: lightgreen;
 }
 
@@ -46,4 +46,47 @@ div.desabilitado {
     cursor: not-allowed;
     background-color: lightgray;
     color: gray;
+}
+
+
+dialog {
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    border: none;
+    
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;  
+    max-height: 80vh;  
+}
+
+dialog h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+dialog p {
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+#fecharDialog {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#fecharDialog:hover {
+    background-color: #45a049;
 }
