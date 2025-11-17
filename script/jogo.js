@@ -105,10 +105,10 @@ function inserirPecasTabuleiro(config){
     const casasJogaveis = document.querySelectorAll('.casaPreta');
     casasJogaveis.forEach(casasIniciais => {
         let identificaLinha = casasIniciais.dataset.linha;
-        if (identificaLinha /*<= 3*/ <=1){
+        if (identificaLinha <= 3){
             casasIniciais.appendChild(config.pecaPreta());
         }
-        if (identificaLinha /*>= 6*/ >=8) {
+        if (identificaLinha >= 6) {
             casasIniciais.appendChild(config.pecaBranca());
         }
     })
@@ -133,6 +133,24 @@ function manipulaPosicao(casaDestino) {
         }
     }
 
+    // se a jogada foi uma captura, verificar se há mais capturas
+    if (linhaCaptura && colunaCaptura) {
+        config.pecaSelecionada = casaDestino.firstChild;
+        resetJogada();
+        verificaJogabilidade(
+            config.pecaSelecionada.dataset.identificador,
+            casaDestino,
+            config.pecaSelecionada.dataset.tipo
+        );
+
+        // se apareceram novas capturas, NÃO troca o turno
+        let temNovaCaptura = [...document.querySelectorAll('.possivel')]
+            .some(c => c.dataset.capturaLinha);
+
+        if (temNovaCaptura) return;
+    }
+
+
     resetJogada();
     verificaVencedor();
     config.alternarTurno();
@@ -144,59 +162,127 @@ function verificaJogabilidade(corPeca, casaAtual, tipoPeca) {
     resetJogada();
     
     config.pecaSelecionada = casaAtual.querySelector('.peca');
-    let linhaAtual = Number(casaAtual.dataset.linha);
-    let colunaAtual = Number(casaAtual.dataset.coluna);
-    let direcao = (corPeca === 'pretas') ? 1 : -1; // pretas descem, brancas sobem
-
     casaAtual.classList.add('selecionada');
-    config.pecaCaptura = null; // reseta possíveis capturas
 
-    if (tipoPeca == 'peao') {
-        let capturaEncontrada = false;
-        let moivimentosJogada = [];
-        // --- MOVIMENTAÇÃO NORMAL ---
-        let diagonais = [
-            { linha: linhaAtual + direcao, coluna: colunaAtual - 1 },
-            { linha: linhaAtual + direcao, coluna: colunaAtual + 1 }
-        ];
-
-        diagonais.forEach(diag => {
-            let casa = document.querySelector(`[data-linha="${diag.linha}"][data-coluna="${diag.coluna}"]`);
-            // console.log(casa);
-            if (!casa) return;
-
-            if (!casa.hasChildNodes()) {
-                // casa livre: movimento simples
-                moivimentosJogada.push(casa);
-            } else {
-                // há uma peça — verificar se é inimiga e se pode capturar
-                let pecaNaDiagonal = casa.querySelector('.peca');
-                if (pecaNaDiagonal.dataset.identificador !== corPeca) {
-                    // verificar casa depois dela
-                    let linhaApos = diag.linha + direcao;
-                    let colunaApos = diag.coluna + (diag.coluna > colunaAtual ? 1 : -1);
-                    let casaApos = document.querySelector(`[data-linha="${linhaApos}"][data-coluna="${colunaApos}"]`);
-                    
-                    if (casaApos && !casaApos.hasChildNodes()) {
-                        // captura disponível
-                        casaApos.classList.add('possivel');
-                        // armazena qual peça será capturada se o jogador clicar nesta casa
-                        casaApos.dataset.capturaLinha = diag.linha;
-                        casaApos.dataset.capturaColuna = diag.coluna;
-                        capturaEncontrada = true;
-                    }
-                }
-            }   
-        });
-        if (!capturaEncontrada) {
-                moivimentosJogada.forEach(casa => {
-                    casa.classList.add('possivel');
-                });
-        }
+    if (tipoPeca === 'peao') {
+        verificaJogabilidadePeao(corPeca, casaAtual);
     } else {
-
+        verificaJogabilidadeDama(corPeca, casaAtual);
     }
 }
+
+
+function verificaJogabilidadePeao(corPeca, casaAtual) {
+    let linhaAtual = Number(casaAtual.dataset.linha);
+    let colunaAtual = Number(casaAtual.dataset.coluna);
+    let direcao = (corPeca === 'pretas') ? 1 : -1;
+
+    let diagonais = [
+        { l: linhaAtual + direcao, c: colunaAtual - 1 },
+        { l: linhaAtual + direcao, c: colunaAtual + 1 }
+    ];
+
+    let capturasDisponiveis = false;
+
+    diagonais.forEach(pos => {
+        let casa = document.querySelector(`[data-linha="${pos.l}"][data-coluna="${pos.c}"]`);
+        if (!casa) return;
+
+        if (!casa.hasChildNodes()) {
+            // só marca movimento simples SE não houver captura disponível
+            casa.classList.add('possivel');
+        } else {
+            // verificar captura
+            let peca = casa.firstChild;
+            if (peca.dataset.identificador !== corPeca) {
+                let lApos = pos.l + direcao;
+                let cApos = pos.c + (pos.c > colunaAtual ? 1 : -1);
+                let casaApos = document.querySelector(`[data-linha="${lApos}"][data-coluna="${cApos}"]`);
+                if (casaApos && !casaApos.hasChildNodes()) {
+                    capturasDisponiveis = true;
+                    casaApos.classList.add('possivel');
+                    casaApos.dataset.capturaLinha = pos.l;
+                    casaApos.dataset.capturaColuna = pos.c;
+                }
+            }
+        }
+    });
+
+    if (capturasDisponiveis) {
+        // remove movimentos simples
+        document.querySelectorAll('.possivel').forEach(c => {
+            if (!c.dataset.capturaLinha) c.classList.remove('possivel');
+        });
+    }
+}
+
+function verificaJogabilidadeDama(corPeca, casaAtual) {
+    let linhaAtual = Number(casaAtual.dataset.linha);
+    let colunaAtual = Number(casaAtual.dataset.coluna);
+
+    let direcoes = [
+        { dl: 1, dc: 1 },
+        { dl: 1, dc: -1 },
+        { dl: -1, dc: 1 },
+        { dl: -1, dc: -1 }
+    ];
+
+    let capturasEncontradas = false;
+
+    direcoes.forEach(dir => {
+        let l = linhaAtual + dir.dl;
+        let c = colunaAtual + dir.dc;
+        let encontrouPecaInimiga = false;
+        let lCaptura, cCaptura;
+
+        while (l >= 1 && l <= 8 && c >= 1 && c <= 8) {
+            let casa = document.querySelector(`[data-linha="${l}"][data-coluna="${c}"]`);
+
+            if (!casa.hasChildNodes()) {
+                // casa vazia
+                if (!encontrouPecaInimiga) {
+                    // movimento simples
+                    casa.classList.add('possivel');
+                } else {
+                    // rota de captura
+                    capturasEncontradas = true;
+                    casa.classList.add('possivel');
+                    casa.dataset.capturaLinha = lCaptura;
+                    casa.dataset.capturaColuna = cCaptura;
+                }
+            } else {
+                let peca = casa.firstChild;
+
+                if (peca.dataset.identificador === corPeca) {
+                    // peça da mesma cor → bloqueia tudo
+                    break;
+                }
+
+                if (!encontrouPecaInimiga) {
+                    // achou primeira peça inimiga
+                    encontrouPecaInimiga = true;
+                    lCaptura = l;
+                    cCaptura = c;
+                } else {
+                    // já tem peça inimiga na direção → bloqueia
+                    break;
+                }
+            }
+
+            l += dir.dl;
+            c += dir.dc;
+        }
+    });
+
+    if (capturasEncontradas) {
+        // remove movimentos simples
+        document.querySelectorAll('.possivel').forEach(c => {
+            if (!c.dataset.capturaLinha) c.classList.remove('possivel');
+        });
+    }
+}
+
+
 
 function promovePeca(casaPromocao){
     let pecaPromovida = casaPromocao.firstChild;

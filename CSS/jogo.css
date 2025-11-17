@@ -1,176 +1,277 @@
+/* ========== RESET VISUAL BÁSICO ========== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ========== LAYOUT GERAL ========== */
 body {
-    background-color: rgb(66, 66, 66);
+    background: linear-gradient(180deg,#4b4b4b,#313131);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
 }
 
-main{
+/* Contêiner principal (seu #principal) */
+#principal {
+    width: min(98vw, 740px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    gap: 16px;
 }
 
+/* ========== HUD (Turno + botão) ========== */
+#HUD {
+    width: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
 
-/* tabuleiro */
+.turno p {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+}
 
-.tabuleiro{
+#controle-turno {
+    color: #ffde7a; /* Cor de destaque (dourado) */
+    margin-left: 6px;
+}
+
+/* Botão reiniciar */
+#reset {
+    background: linear-gradient(180deg,#ff6b6b,#ff3b3b);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.45);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+#reset:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 10px 18px rgba(0,0,0,0.5); 
+}
+
+/* ========== TABULEIRO ========== */
+/* wrapper section.tabuleiro */
+.tabuleiro {
+    width: min(92vw, 520px);
+    max-width: 520px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg,#2b2b2b,#171717);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,255,255,0.02);
+}
+
+/* O table ocupa todo o espaço disponível */
+.tabuleiro > table {
     width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    display: block; 
+}
+
+/* cada linha é um flex row para comportar td como boxes */
+.tabuleiro > table > tr {
+    display: flex;
+    width: 100%;
+    height: 12.5%; /* 8 linhas -> 100% / 8 */
+}
+
+/* células (td) */
+.tabuleiro td {
+    width: 12.5%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    transition: background-color .15s ease;
+    user-select: none;
+    overflow: hidden;
 }
 
-table{
-    width: 408px;
-    height: 408px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #000000;
-
-
-}
-
-tr{
-    width: 400px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-}
-
-td{
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 1000;
-}
-
-td.possivel{
-    background-color: lightgreen; 
-    cursor: pointer;
-}
-
-td.selecionada {
-    background-color: lightblue;
-}
-
+/* Cores do tabuleiro (suas classes) */
 .casaPreta {
-    background-color: #6b4901 ; /* Cor escura */
+    background: linear-gradient(180deg,#5f3a0b,#7f4e18);
 }
 
 .casaBranca {
-    background-color: #e2c27e; /* Cor clara */
+    background: linear-gradient(180deg,#f0d9a7,#e4c885);
 }
 
+/* destaque casa possível */
+td.possivel {
+    background: linear-gradient(180deg, rgba(147, 233, 155, 0.95), rgba(86,200,121,0.75));
+    cursor: pointer;
+    box-shadow: inset 0 0 0 3px rgba(20,20,20,0.06);
+}
 
-/* peças */
+/* casa selecionada - muito visível */
+td.selecionada {
+    outline: 4px solid rgba(50,168,255,0.95);
+    outline-offset: -4px;
+    box-shadow: 0 0 16px rgba(50,168,255,0.18);
+}
 
+/* ========== PEÇAS ========== */
 .peca {
-    width: 40px;
-    height: 40px;
+    width: 70%;
+    height: 70%;
     border-radius: 50%;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box; 
-    z-index: 0;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        inset 0 -6px 12px rgba(0,0,0,0.35),
+        0 8px 18px rgba(0,0,0,0.45);
+    transition: transform .12s cubic-bezier(.2,.9,.2,1), box-shadow .12s;
+    z-index: 2;
+    position: relative; /* Essencial para o pseudo-elemento ::after */
 }
 
+/* hover leve */
+.peca:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* estilos por cor (seu padrão: .preta .branca nos divs) */
 .peca.branca {
-    background-color: #F5F5F7;
-    /* background-image: radial-gradient(circle at 50% 40%, #FFFFFF, #E8E9EB 90%); */
-    border: 1px solid #B0B8C4;
+    background: radial-gradient(circle at 40% 30%, #ffffff 0%, #e0e0e0 60%, #cfcfcf 100%);
+    border: 1px solid rgba(0,0,0,0.12);
 }
 
 .peca.preta {
-    background-color: #0e0d0d;
-    /* background-image: radial-gradient(circle at 50% 40%, #636D6F, #303638 90%); */
-    border: 1px solid #717C7E;
+    background: radial-gradient(circle at 40% 30%, #333 0%, #0b0b0b 70%);
+    border: 1px solid rgba(255,255,255,0.04);
 }
 
-div.dama {
-    border: 2px solid gold !important;
-    background: center / 70% no-repeat 
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23FFD700" d="M64 384h384l-32-224-80 80-80-128-80 128-80-80-32 224z"/><rect x="64" y="384" width="384" height="32" fill="%23B8860B"/></svg>');
-  
+/* DAMA: Apenas a borda e o brilho */
+.peca.dama {
+    border: 3px solid #ffd55a;
+    box-shadow:
+        inset 0 -6px 12px rgba(0,0,0,0.4),
+        0 10px 26px rgba(255, 213, 79, 0.16);
 }
 
+/* DAMA (COROA): Usando ::after para sobrepor o SVG */
+.peca.dama::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Adiciona o SVG da coroa como background do pseudo-elemento */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23FFD700" d="M64 384h384l-32-224-80 80-80-128-80 128-80-80-32 224z"/><rect x="64" y="384" width="384" height="32" fill="%23B8860B"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 60%; 
+    z-index: 3; 
+}
+
+
+/* ========== MODAIS ========== */
 dialog {
-    background-color: khaki;
-    height: 100px;
-    width: 290px;
-    border: 1px solid black;
-    border-radius: 8px;
-    gap: 15px;
-    z-index: 1001;
-    
+    background: #3a3a3a;
+    color: #f5f5f5;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #555;
+    width: 340px;
+    max-width: 90%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    text-align: center;
+    /* Centraliza o modal na tela */
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
 }
-dialog > div {
+
+/* Fundo escurecido ao abrir o modal */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+}
+
+dialog h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Container para botões (criado no seu JS) */
+.container-botoes {
     display: flex;
-    font-weight: bolder;
-}
-
-dialog > div:first-child {
     justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
 }
 
-dialog .container-botoes {
-    display: flex;
-    gap: 20px;
-    height: 80px;
-    align-items: flex-end;
-    justify-content: center;
-
-}
-
+/* Estilo geral para botões de modal */
 dialog button {
-    height: 30px;
     border: none;
-    padding: 8px;
-    color:white;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+dialog button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.4);
 }
 
-
-
-button.sim {
-    background-color: green;
-}
-
-button.sim:hover {
-    border: 1px solid green;
-    background-color: white;
-    color: green;
-}
-
-button.nao {
-    background-color: red;
-}
-
-button.nao:hover {
-    border: 1px solid red;
-    background-color: white;
-    color: red;
-}
-
-dialog.modal-vitoria {
-    font-weight: bolder;
-}
-
-div.container-vitoria {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
+/* Botões SIM (Verde) - .sim e .nova-partida */
+button.sim,
 button.nova-partida {
-
-    color: black;
-    
+    background: linear-gradient(180deg,#60d374,#3f9b51);
+    color: #fff;
 }
+
+/* Botão NÃO (Vermelho) - .nao */
+button.nao {
+    background: linear-gradient(180deg,#ff6b6b,#ff3b3b);
+    color: #fff;
+}
+
+/* Estilo específico do modal de vitória */
+.modal-vitoria h3 {
+    color: #ffde7a; 
+    font-size: 1.5rem;
+}
+
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 540px) {
+    .tabuleiro { 
+        width: 94vw; 
+        aspect-ratio: 1/1; 
+        padding: 6px; 
+    }
+    #principal { padding: 8px; }
+    #HUD { gap: 8px; }
+    .turno p { font-size: 1rem; }
+    #reset { padding: 7px 12px; font-size: 0.95rem; }
+}
+
+/* esconder focus outline default em elementos clicáveis do jogo */
+.tabuleiro td:focus { outline: none; }
+
+/* mantém as peças centradas mesmo com outline */
+.tabuleiro td .peca { pointer-events: auto; }
