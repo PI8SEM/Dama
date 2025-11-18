@@ -10,7 +10,7 @@ Henrique Souza Uchida
 
 Victor Hugo Amaral Silva
 
-##Como rodar os testes (passo-a-passo):
+## Como rodar os testes (passo-a-passo):
 
 1. Pré-requisitos
 - Ter o Node.js e npm instalados (versão compatível com o projeto).
