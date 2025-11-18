@@ -1,0 +1,21 @@
+{
+  "name": "dama",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --colors",
+    "test:unit": "jest --colors --testPathPattern=tests/unit",
+    "test:integration": "jest --colors --testPathPattern=tests/integration",
+    "test:watch": "jest --watchAll",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^8.20.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@playwright/test": "^1.36.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^22.1.0",
+    "playwright": "^1.36.0"
+  }
+}
