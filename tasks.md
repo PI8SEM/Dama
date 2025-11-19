@@ -18,18 +18,17 @@
     - [X] Realizar movimentação ao clicar no destino válido.
     - [X] Alternar turno automaticamente após a jogada.
 
-- [ ] **4. Implementar regras de captura**
+- [X] **4. Implementar regras de captura**
     - [X] Permitir captura ao pular sobre peça adversária.
     - [X] Remover peça capturada do tabuleiro.
-    - [ ] Permitir capturas múltiplas na mesma jogada.
-    - [ ] (Opcional) Forçar captura quando existir possibilidade.
+    - [X] Permitir capturas múltiplas na mesma jogada.
 
-- [ ] **5. Implementar promoção a dama**
+- [X] **5. Implementar promoção a dama**
     - [X] Detectar quando uma peça chega à última linha.
     - [X] Promover para dama e aplicar novo estilo visual.
-    - [ ] Permitir movimentação estendida da dama (para frente e para trás).
+    - [X] Permitir movimentação estendida da dama (para frente e para trás).
 
-- [ ] **6. Implementar reinício e fim de jogo**
+- [X] **6. Implementar reinício e fim de jogo**
     - [X] Botão “Reiniciar” deve restaurar o estado inicial do tabuleiro.
     - [X] Detectar fim de jogo (sem peças ou sem movimentos possíveis).
     - [X] Exibir mensagem de vitória do jogador.
